@@ -1,0 +1,8 @@
+# 统一游戏外壳 /play/<游戏目录名>/ → shell
+/play/*        /play/index.html     200
+/dashboard/*   /dashboard/index.html 200
+/pricing/*     /pricing/index.html   200
+/daily/*       /daily/index.html     200
+
+# SPA 回退（必须放在最后）
+/*             /index.html           200

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0a0b12">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="manifest" href="/manifest.json">
+<title>我的存档 · Game Space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#05060b;--panel:#101220;--panel2:#171a2c;--ink:#ecebfa;--dim:#8b88ae;--line:rgba(150,158,255,.14);--magenta:#ff2e88;--cyan:#22e3ff;--amber:#ffcf4a;--lime:#9dff5b;--pixel:'Silkscreen','Courier New',monospace;--cjk:'ZCOOL QingKe HuangYou','PingFang SC','Microsoft YaHei',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:radial-gradient(120% 80% at 50% -10%,#171a33,var(--bg) 55%);color:var(--ink);font-family:var(--cjk);min-height:100vh}
+a{color:inherit}
+.wrap{max-width:900px;margin:0 auto;padding:clamp(24px,5vw,54px) clamp(16px,4vw,40px) 70px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:34px}
+.back{font-family:var(--pixel);font-size:.62rem;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 14px;border-radius:10px}
+.back:hover{color:var(--cyan);border-color:var(--cyan)}
+h1{font-size:clamp(1.9rem,5vw,3rem);font-weight:400;letter-spacing:.04em}
+h1 em{font-style:normal;color:var(--cyan);text-shadow:0 0 26px rgba(34,227,255,.4)}
+.card{border:1px solid var(--line);border-radius:16px;background:linear-gradient(160deg,var(--panel2),var(--panel));padding:clamp(18px,3vw,28px);margin-bottom:18px}
+.card h2{font-size:1.25rem;font-weight:400;letter-spacing:.05em;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.card h2 small{font-family:var(--pixel);font-size:.55rem;color:var(--dim);letter-spacing:.1em}
+.tabs{display:flex;gap:8px;margin-bottom:20px}
+.tabs button{background:transparent;border:1px solid var(--line);color:var(--dim);border-radius:9px;padding:9px 18px;cursor:pointer;font-size:.95rem}
+.tabs button.on{background:var(--cyan);border-color:var(--cyan);color:#05060b}
+label{display:block;font-family:var(--pixel);font-size:.58rem;letter-spacing:.12em;color:var(--dim);margin-bottom:8px}
+input,textarea,select{width:100%;background:rgba(5,6,11,.55);border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:13px 14px;font-family:var(--cjk);font-size:1rem;outline:0}
+input:focus,textarea:focus{border-color:var(--cyan)}
+.field{margin-bottom:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--magenta);color:#05060b;border:1px solid var(--magenta);border-radius:10px;padding:12px 20px;font-size:.95rem;font-weight:700;cursor:pointer;text-decoration:none;transition:.2s}
+.btn:hover{background:var(--lime);border-color:var(--lime)}
+.btn.alt{background:transparent;color:var(--ink);border-color:var(--line);font-weight:400}
+.btn.alt:hover{color:var(--cyan);border-color:var(--cyan)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.badge{font-family:var(--pixel);font-size:.55rem;letter-spacing:.1em;padding:5px 9px;border-radius:6px;border:1px solid var(--line);color:var(--dim)}
+.badge.pro{color:#05060b;background:var(--amber);border-color:var(--amber)}
+.list{display:grid;gap:10px}
+.item{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px;border:1px solid var(--line);border-radius:11px;background:rgba(5,6,11,.35)}
+.item .nm{flex:1;min-width:130px;font-size:1.05rem}
+.item .meta{font-family:var(--pixel);font-size:.55rem;color:var(--dim)}
+.item a{color:var(--cyan);text-decoration:none;font-size:.9rem}
+.empty{text-align:center;color:var(--dim);padding:34px 10px;line-height:1.8}
+.hint{font-size:.88rem;color:var(--dim);line-height:1.8;margin-top:14px}
+.hidden{display:none!important}
+@media(max-width:560px){.btn{width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a class="back" href="/">← 返回街机厅</a><a class="back" href="/pricing/">会员方案 →</a></div>
+  <h1>我的<em>存档</em></h1>
+
+  <section class="card" id="authCard">
+    <h2>账号 <small>ACCOUNT</small></h2>
+    <div class="tabs"><button class="on" data-mode="login">登录</button><button data-mode="register">注册</button></div>
+    <form id="authForm">
+      <div class="field"><label for="email">邮箱</label><input id="email" type="email" required autocomplete="email" placeholder="you@example.com"></div>
+      <div class="field"><label for="password">密码</label><input id="password" type="password" required autocomplete="current-password" placeholder="至少 8 位"></div>
+      <button class="btn" type="submit" id="authSubmit">登录</button>
+    </form>
+    <p class="hint">未配置后端时仍可使用本地存档与存档码；注册后即可开启云端同步。</p>
+  </section>
+
+  <section class="card hidden" id="profileCard">
+    <h2>账号 <small id="subState" class="badge">本地模式</small></h2>
+    <div class="row"><span id="who"></span><button class="btn alt" id="logout">退出登录</button></div>
+  </section>
+
+  <section class="card">
+    <h2>本地存档 <small>LOCAL SAVES</small></h2>
+    <div class="list" id="saves"></div>
+    <div class="row" style="margin-top:18px">
+      <button class="btn alt" id="uploadAll">上传全部到云端</button>
+      <button class="btn alt" id="refresh">刷新</button>
+    </div>
+    <p class="hint">每款游戏在游玩时每 30 秒自动保存一次。云端同步需要登录且后端已部署。</p>
+  </section>
+
+  <section class="card">
+    <h2>存档码 <small>EXPORT / IMPORT</small></h2>
+    <div class="field"><label for="code">复制下面的存档码，或粘贴要导入的存档码</label><textarea id="code" rows="4" placeholder="在此粘贴存档码…"></textarea></div>
+    <div class="row"><button class="btn" id="makeCode">生成存档码</button><button class="btn alt" id="copyCode">复制</button><button class="btn alt" id="doImport">导入</button></div>
+  </section>
+</div>
+
+<script src="/assets/games.js?v=1"></script>
+<script src="/assets/core.js?v=1"></script>
+<script>
+(function(){
+  'use strict';
+  const C = window.GS_CORE, G = window.GS;
+  const $ = id => document.getElementById(id);
+  let mode = 'login';
+
+  function encodeCode(obj){
+    return btoa(unescape(encodeURIComponent(JSON.stringify(obj)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  }
+  function decodeCode(code){
+    let s = code.trim().replace(/-/g,'+').replace(/_/g,'/');
+    return JSON.parse(decodeURIComponent(escape(atob(s))));
+  }
+  function localSaves(){
+    const out = [];
+    for (let i=0;i<localStorage.length;i++){
+      const k = localStorage.key(i);
+      if (!k || k.indexOf('save_') !== 0) continue;
+      const rec = C.getJSON(k, null);
+      if (rec) out.push({ key:k, game:rec.game || k.slice(5), saved_at:rec.saved_at });
+    }
+    return out.sort((a,b) => new Date(b.saved_at) - new Date(a.saved_at));
+  }
+  function renderSaves(){
+    const list = localSaves();
+    $('saves').innerHTML = list.length ? list.map(s => {
+      const n = Number((s.game.match(/^(\d+)-/) || [])[1] || 0);
+      const g = G.find(n);
+      const name = g ? G.disp(g[1]) : s.game;
+      return '<div class="item"><span class="nm">'+name+'</span><span class="meta">'+(s.saved_at ? C.fmtDate(new Date(s.saved_at).getTime()) : '—')+'</span><a href="'+G.playUrl(g || [0,s.game])+'">继续玩 →</a></div>';
+    }).join('') : '<div class="empty">还没有存档。去玩一局，进度会自动出现在这里。</div>';
+  }
+  function renderAuth(){
+    const logged = C.auth.isLogged();
+    $('authCard').classList.toggle('hidden', logged);
+    $('profileCard').classList.toggle('hidden', !logged);
+    if (logged) {
+      const u = C.auth.user() || {};
+      $('who').textContent = u.email || '已登录用户';
+      $('subState').textContent = u.is_pro ? 'PRO MEMBER' : 'FREE MEMBER';
+      $('subState').classList.toggle('pro', !!u.is_pro);
+    }
+  }
+
+  document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => {
+    mode = b.dataset.mode;
+    document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
+    $('authSubmit').textContent = mode === 'login' ? '登录' : '注册';
+    $('password').autocomplete = mode === 'login' ? 'current-password' : 'new-password';
+  }));
+
+  $('authForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const email = $('email').value.trim(), password = $('password').value;
+    $('authSubmit').disabled = true;
+    try {
+      const data = mode === 'login' ? await C.api.login(email,password) : await C.api.register(email,password);
+      C.auth.set(data.token, data.user);
+      C.toast(mode === 'login' ? '登录成功' : '注册成功，云端同步已开启');
+      renderAuth();
+      try {
+        const sub = await C.api.sub();
+        const u = C.auth.user() || {};
+        u.is_pro = !!sub.is_pro;
+        C.auth.set(C.auth.token(), u);
+        renderAuth();
+      } catch(err){}
+    } catch (err) {
+      C.toast('后端暂不可用或操作失败：' + err.message);
+    } finally { $('authSubmit').disabled = false; }
+  });
+
+  $('logout').addEventListener('click', () => { C.auth.logout(); renderAuth(); C.toast('已退出登录'); });
+  $('refresh').addEventListener('click', renderSaves);
+
+  $('uploadAll').addEventListener('click', async () => {
+    if (!C.auth.isLogged()) { C.toast('请先登录'); return; }
+    const recs = localSaves();
+    let ok = 0;
+    for (const s of recs) {
+      try { await C.api.save(s.game, C.getJSON(s.key, {}).data || {}); ok++; } catch(e){}
+    }
+    C.toast('已上传 ' + ok + ' / ' + recs.length + ' 份存档');
+  });
+
+  $('makeCode').addEventListener('click', async () => {
+    const saves = {};
+    localSaves().forEach(s => { saves[s.game] = C.getJSON(s.key, null); });
+    let payload = { v:1, exported_at:new Date().toISOString(), saves };
+    if (C.auth.isLogged()) {
+      try { const r = await C.api.exportCode(); payload = decodeCode(r.code); } catch(e){}
+    }
+    $('code').value = encodeCode(payload);
+    C.toast('存档码已生成');
+  });
+
+  $('copyCode').addEventListener('click', async () => {
+    if (!$('code').value) { C.toast('请先生成存档码'); return; }
+    try { await navigator.clipboard.writeText($('code').value); C.toast('已复制到剪贴板'); }
+    catch(e) { $('code').select(); C.toast('请手动复制'); }
+  });
+
+  $('doImport').addEventListener('click', () => {
+    try {
+      const payload = decodeCode($('code').value);
+      const saves = payload.saves || {};
+      Object.keys(saves).forEach(game => {
+        C.setJSON('save_' + game, saves[game]);
+      });
+      renderSaves();
+      C.toast('已导入 ' + Object.keys(saves).length + ' 份存档');
+    } catch(e) { C.toast('存档码无法识别'); }
+  });
+
+  renderAuth();
+  renderSaves();
+
+  const next = new URLSearchParams(location.search).get('next');
+  if (next && C.auth.isLogged()) setTimeout(() => { location.href = next; }, 900);
+})();
+</script>
+</body>
+</html>

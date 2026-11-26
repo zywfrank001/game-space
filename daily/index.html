@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0a0b12">
+<meta name="description" content="Game Space 每日挑战：每天三款固定种子的推荐游戏，打开即玩，进度自动保存。">
+<link rel="icon" href="/favicon.png" type="image/png"><link rel="apple-touch-icon" href="/icon-192.png"><link rel="manifest" href="/manifest.json">
+<title>每日挑战 · Game Space</title>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#05060b;--panel:#101220;--panel2:#171a2c;--ink:#ecebfa;--dim:#8b88ae;--line:rgba(150,158,255,.14);--cyan:#22e3ff;--amber:#ffcf4a;--lime:#9dff5b;--magenta:#ff2e88;--cjk:'ZCOOL QingKe HuangYou','PingFang SC','Microsoft YaHei',sans-serif;--pixel:'Silkscreen',monospace}
+*{margin:0;padding:0;box-sizing:border-box}body{background:radial-gradient(120% 80% at 50% -10%,#171a33,var(--bg) 55%);color:var(--ink);font-family:var(--cjk);min-height:100vh}
+.wrap{max-width:900px;margin:0 auto;padding:clamp(24px,5vw,60px) clamp(16px,4vw,40px) 70px}
+.back{font-family:var(--pixel);font-size:.62rem;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 14px;border-radius:10px;display:inline-block}
+.stamp{font-family:var(--pixel);font-size:.62rem;letter-spacing:.2em;color:var(--amber);margin-top:38px}
+h1{font-size:clamp(2.2rem,7vw,4rem);font-weight:400;letter-spacing:.04em;margin:16px 0}
+h1 em{font-style:normal;color:var(--magenta)}
+p.lede{color:var(--dim);line-height:1.9;max-width:56ch}
+.grid{display:grid;gap:14px;margin-top:38px}
+.item{display:grid;grid-template-columns:64px 1fr auto;align-items:center;gap:16px;padding:20px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(160deg,var(--panel2),var(--panel));text-decoration:none;color:inherit;transition:.22s}
+.item:hover{border-color:var(--lime);transform:translateY(-3px)}
+.item .rank{font-family:var(--pixel);font-size:1.5rem;color:var(--amber)}
+.item b{font-size:1.3rem;font-weight:400}
+.item small{display:block;color:var(--dim);margin-top:6px;line-height:1.6}
+.item .go{font-family:var(--pixel);font-size:.6rem;color:var(--lime);letter-spacing:.08em}
+footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--line);font-size:.85rem;color:var(--dim);line-height:1.8}
+@media(max-width:560px){.item{grid-template-columns:44px 1fr}.item .go{grid-column:2}}
+</style>
+</head>
+<body><div class="wrap">
+<a class="back" href="/">← 返回街机厅</a>
+<div class="stamp" id="stamp">DAILY SEED / —</div>
+<h1>今天的<em>三局</em></h1>
+<p class="lede">每天固定三款，所有人拿到同一组题目。种子由日期决定，刷新页面也不会变 —— 玩完记得回来看看明天是什么。</p>
+<div class="grid" id="grid"></div>
+<footer>游戏素材来源于开源社区，仅供学习娱乐 · <a href="/guide/">游戏攻略</a> · <a href="/pricing/">会员方案</a></footer>
+</div>
+<script src="/assets/games.js?v=1"></script>
+<script src="/assets/core.js?v=1"></script>
+<script>
+(function(){
+  const G = window.GS, C = window.GS_CORE;
+  const now = new Date();
+  const seedStr = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
+  let hash = 0;
+  for (const ch of seedStr) hash = (hash * 31 + ch.charCodeAt(0)) >>> 0;
+  document.getElementById('stamp').textContent = 'DAILY SEED / ' + seedStr + ' / #' + hash.toString(16).toUpperCase();
+
+  const challenges = [
+    { label:'热身局', hint:'先活动手指，别一上来就拼命。' },
+    { label:'主菜局', hint:'今天的重头戏，给自己三次机会。' },
+    { label:'收尾局', hint:'轻松收工，顺便看看进度存住没有。' }
+  ];
+  const used = new Set();
+  const picks = challenges.map((c, i) => {
+    let n = (hash + i * 7919) % G.GAMES.length;
+    while (used.has(n)) n = (n + 1) % G.GAMES.length;
+    used.add(n);
+    return { game: G.GAMES[n], ...c };
+  });
+
+  document.getElementById('grid').innerHTML = picks.map((p, i) => {
+    const name = G.disp(p.game[1]);
+    return '<a class="item" href="' + G.playUrl(p.game) + '" data-name="' + name + '">' +
+      '<span class="rank">' + ['01','02','03'][i] + '</span>' +
+      '<span><b>' + p.label + ' · ' + name + '</b><small>' + p.hint + ' #' + String(p.game[0]).padStart(2,'0') + ' / ' + p.game[2] + '</small></span>' +
+      '<span class="go">▶ PLAY</span></a>';
+  }).join('');
+
+  document.getElementById('grid').addEventListener('click', e => {
+    const a = e.target.closest('[data-name]');
+    if (a) C.track('daily_play', { date: seedStr, game: a.dataset.name });
+  });
+})();
+</script>
+</body></html>

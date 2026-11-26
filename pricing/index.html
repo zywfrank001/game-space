@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0a0b12">
+<meta name="description" content="Game Space 会员：云端存档、数据看板、成就与优先体验。">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="manifest" href="/manifest.json">
+<title>会员方案 · Game Space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#05060b;--panel:#101220;--panel2:#171a2c;--ink:#ecebfa;--dim:#8b88ae;--line:rgba(150,158,255,.14);--magenta:#ff2e88;--cyan:#22e3ff;--amber:#ffcf4a;--lime:#9dff5b;--pixel:'Silkscreen','Courier New',monospace;--cjk:'ZCOOL QingKe HuangYou','PingFang SC','Microsoft YaHei',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:radial-gradient(120% 80% at 50% -10%,#171a33,var(--bg) 55%);color:var(--ink);font-family:var(--cjk);min-height:100vh}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:clamp(24px,5vw,60px) clamp(16px,4vw,40px) 70px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:clamp(36px,6vw,70px)}
+.back{font-family:var(--pixel);font-size:.62rem;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 14px;border-radius:10px}
+.back:hover{color:var(--cyan);border-color:var(--cyan)}
+.tag{font-family:var(--pixel);font-size:.6rem;letter-spacing:.22em;color:var(--amber)}
+h1{font-size:clamp(2.3rem,7vw,4.4rem);line-height:1.05;font-weight:400;letter-spacing:.03em;margin:18px 0 16px}
+h1 em{font-style:normal;color:var(--magenta);text-shadow:0 0 30px rgba(255,46,136,.45)}
+.lede{font-size:clamp(1rem,2.5vw,1.2rem);color:var(--dim);line-height:1.8;max-width:56ch}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(224px,1fr));gap:14px;margin:clamp(34px,6vw,58px) 0}
+.plan{position:relative;padding:26px 22px 24px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(160deg,var(--panel2),var(--panel));display:flex;flex-direction:column;gap:16px;transition:.25s}
+.plan:hover{transform:translateY(-5px);border-color:color-mix(in srgb,var(--cyan) 45%,transparent)}
+.plan.hot{border-color:color-mix(in srgb,var(--magenta) 60%,transparent);box-shadow:0 0 50px -22px var(--magenta)}
+.plan .flag{position:absolute;top:-1px;right:20px;font-family:var(--pixel);font-size:.52rem;letter-spacing:.1em;color:#05060b;background:var(--magenta);padding:6px 10px;border-radius:0 0 8px 8px}
+.plan .name{font-size:1.3rem;letter-spacing:.06em}
+.plan .price{font-family:var(--pixel);font-size:clamp(1.9rem,5vw,2.6rem);color:var(--amber);line-height:1}
+.plan .price small{font-size:.7rem;color:var(--dim);margin-left:6px}
+.plan ul{list-style:none;display:grid;gap:10px;font-size:.95rem;color:var(--dim);line-height:1.5;flex:1}
+.plan li::before{content:'▸ ';color:var(--lime)}
+.plan a{display:block;text-align:center;text-decoration:none;padding:13px;border:1px solid var(--line);border-radius:11px;font-size:1rem;transition:.2s}
+.plan a:hover{background:var(--amber);border-color:var(--amber);color:#05060b}
+.plan.hot a{background:var(--magenta);border-color:var(--magenta);color:#05060b;font-weight:700}
+.note{font-size:.9rem;color:var(--dim);line-height:1.8;border-left:2px solid var(--cyan);padding-left:16px}
+.sec{margin-top:clamp(40px,7vw,72px)}
+.sec h2{font-size:1.6rem;font-weight:400;letter-spacing:.05em;margin-bottom:22px}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th,td{text-align:left;padding:14px 10px;border-bottom:1px solid var(--line)}
+th{font-family:var(--pixel);font-size:.58rem;letter-spacing:.1em;color:var(--dim);font-weight:400}
+td:not(:first-child),th:not(:first-child){text-align:center}
+.yes{color:var(--lime)}.no{color:var(--dim);opacity:.5}
+.faq{display:grid;gap:14px}
+details{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:rgba(150,158,255,.03)}
+summary{cursor:pointer;font-size:1.05rem}
+details p{color:var(--dim);line-height:1.8;margin-top:12px;font-size:.95rem}
+footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--line);font-size:.85rem;color:var(--dim);line-height:1.8}
+@media(max-width:560px){th,td{padding:11px 5px;font-size:.82rem}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a class="back" href="/">← 返回街机厅</a><span class="tag">MEMBER PASS / 即将开放</span></div>
+  <h1>你只管玩，<br><em>进度交给我。</em></h1>
+  <p class="lede">游戏是开源社区的，但存档、体验和连续性是你的。会员把「换设备也能接着玩」变成默认设置。</p>
+
+  <section class="plans">
+    <div class="plan">
+      <div class="name">免费玩家</div><div class="price">¥0<small>/ 永久</small></div>
+      <ul><li>60 款游戏即点即玩</li><li>本地自动存档</li><li>零广告</li><li>最近游玩记录</li></ul>
+      <a href="/">直接开玩</a>
+    </div>
+    <div class="plan hot">
+      <span class="flag">推荐</span>
+      <div class="name">月度通行证</div><div class="price">¥6.9<small>/ 月</small></div>
+      <ul><li>包含全部免费权益</li><li>云端存档 · 换设备同步</li><li>存档码导出 / 导入</li><li>个人数据看板</li><li>优先体验新游戏</li></ul>
+      <a href="#soon" data-plan="月度通行证 ¥6.9">开通会员</a>
+    </div>
+    <div class="plan">
+      <div class="name">半年通行证</div><div class="price">¥29<small>/ 半年</small></div>
+      <ul><li>包含全部会员权益</li><li>约 ¥4.8 / 月</li><li>存档永久保留</li><li>成就系统</li></ul>
+      <a href="#soon" data-plan="半年通行证 ¥29">开通会员</a>
+    </div>
+    <div class="plan">
+      <div class="name">年度通行证</div><div class="price">¥49<small>/ 年</small></div>
+      <ul><li>包含全部会员权益</li><li>约 ¥4.1 / 月</li><li>每日挑战专属记录</li><li>未来功能全量解锁</li></ul>
+      <a href="#soon" data-plan="年度通行证 ¥49">开通会员</a>
+    </div>
+    <div class="plan">
+      <div class="name">永久买断</div><div class="price">¥19.9<small>/ 一次</small></div>
+      <ul><li>一次付费，长期有效</li><li>全部会员权益</li><li>站点持续运营即持续可用</li></ul>
+      <a href="#soon" data-plan="永久买断 ¥19.9">开通会员</a>
+    </div>
+  </section>
+
+  <p class="note">支付通道正在准备中。按钮已开始收集点击需求 —— 你点一次，我们就多一分把它做好的理由。当前注册即可使用本地存档与最近游玩，云端同步会在支付开放前先行试用。</p>
+
+  <section class="sec">
+    <h2>权益对照</h2>
+    <table>
+      <thead><tr><th>功能</th><th>免费</th><th>会员</th></tr></thead>
+      <tbody>
+        <tr><td>60 款游戏在线即玩</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td>本地自动存档</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td>零广告</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td>云端存档 / 跨设备</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><td>存档码导出导入</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><td>数据看板与成就</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><td>优先体验新游戏</td><td class="no">—</td><td class="yes">✓</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="sec faq">
+    <h2>常见问题</h2>
+    <details><summary>付费后进度会丢吗？</summary><p>不会。本地存档一直保留，云端只是多一份副本。即使会员到期，本地数据仍可正常游玩。</p></details>
+    <details><summary>为什么现在还不能付款？</summary><p>我们想先验证需求，再投入支付通道的申请与对接。按钮点击会被记录，达到预期后立刻接入。</p></details>
+    <details><summary>永久买断包含未来新功能吗？</summary><p>只要站点持续运营，买断用户即享有后续新增的会员功能，不会二次收费。</p></details>
+  </section>
+
+  <footer>游戏素材来源于开源社区，仅供学习娱乐 · <a href="/guide/">游戏攻略</a> · <a href="/daily/">每日挑战</a></footer>
+</div>
+<script src="/assets/core.js?v=1"></script>
+<script>
+document.querySelectorAll('[data-plan]').forEach(a => a.addEventListener('click', () => {
+  window.GS_CORE.track('plan_click', { plan: a.dataset.plan });
+  window.GS_CORE.toast('已记录你的选择 · 支付通道即将开放');
+}));
+</script>
+</body>
+</html>

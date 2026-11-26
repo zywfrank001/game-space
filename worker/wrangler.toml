@@ -1,0 +1,26 @@
+name = "game-space-api"
+main = "index.js"
+compatibility_date = "2026-11-25"
+
+# 部署步骤：
+#   cd worker
+#   npx wrangler secret put JWT_SECRET   # 粘贴随机密钥，加密存在 CF，不进仓库
+#   npx wrangler deploy
+# 部署后在 CF Dashboard 把 Worker 路由绑定到同一域名的 /api/*
+# （例如 play.example.com/api/*），前端默认用相对路径 /api/...，无需额外配置。
+
+[[kv_namespaces]]
+binding = "USER_KV"
+id = "54150b37f88a4b2989f962131e839557"
+
+[[kv_namespaces]]
+binding = "SAVE_KV"
+id = "de3b49b7d7d441a6b99d83808f692263"
+
+[[kv_namespaces]]
+binding = "EXPORT_KV"
+id = "8ce4f25bcdbd4f9ea0077314f7e9d23f"
+
+[[kv_namespaces]]
+binding = "SCORE_KV"
+id = "c00a50ebdce14359a59b5721fcacda23"
