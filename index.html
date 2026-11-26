@@ -589,7 +589,7 @@
             recentPanel.innerHTML = '<h3>最近玩</h3>' + list.map(x => {
                 const g = window.GS.find(Number((x.id.match(/^(\d+)-/) || [])[1] || 0));
                 const nm = g ? disp(g[1]) : x.name;
-                const href = g ? window.GS.playUrl(g) : '/play/' + encodeURIComponent(x.id) + '/';
+                const href = g ? window.GS.playUrl(g) : '/play/?g=' + encodeURIComponent(x.id);
                 return `<a href="${href}">▸ ${esc(nm)}<span style="float:right;color:var(--dim);font-size:.75rem">${window.GS_CORE.fmtDate(x.at).slice(-8)}</span></a>`;
             }).join('') + '<div class="rp-foot"><button id="clearRecent" style="background:none;border:0;color:var(--dim);font:inherit;cursor:pointer;padding:0">清空</button><a href="/dashboard/">我的存档 →</a></div>';
             const clr = document.getElementById('clearRecent');

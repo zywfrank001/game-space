@@ -1,8 +1,8 @@
-# 统一游戏外壳 /play/<游戏目录名>/ → shell
-/play/*        /play/index.html     200
-/dashboard/*   /dashboard/index.html 200
-/pricing/*     /pricing/index.html   200
-/daily/*       /daily/index.html     200
-
-# SPA 回退（必须放在最后）
-/*             /index.html           200
+# Cloudflare Pages 2026+ 把 "/* /index.html 200" 这类通配 rewrite 判为无限循环，
+# 会直接导致构建失败（error 100324）。本站是纯静态目录结构：
+#   /dashboard/  → dashboard/index.html
+#   /pricing/    → pricing/index.html
+#   /daily/      → daily/index.html
+#   /guide/      → guide/index.html
+# 以上均由 Pages 原生解析，无需任何 rewrite 规则。
+# 游戏外壳使用 /play/index.html?g=<游戏目录> 查询参数，同样不需要 rewrite。

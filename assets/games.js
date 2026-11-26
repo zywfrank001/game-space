@@ -43,7 +43,7 @@
 
   const dir = g => g[0] + '-' + g[1];
   const disp = name => name.replace(/-\s+/g, ' ').trim();
-  const playUrl = g => '/play/' + encodeURIComponent(dir(g)) + '/';
+  const playUrl = g => '/play/?g=' + encodeURIComponent(dir(g));
   const find = n => GAMES.find(g => g[0] === Number(n));
 
   window.GS = { GAMES, CATS, FEATURED, NO_ART, SCENES, dir, disp, playUrl, find };
