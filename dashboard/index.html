@@ -47,7 +47,26 @@ input:focus,textarea:focus{border-color:var(--cyan)}
 .empty{text-align:center;color:var(--dim);padding:34px 10px;line-height:1.8}
 .hint{font-size:.88rem;color:var(--dim);line-height:1.8;margin-top:14px}
 .hidden{display:none!important}
-@media(max-width:560px){.btn{width:100%}}
+.achhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.achhead .count{font-family:var(--pixel);font-size:.62rem;color:var(--lime);letter-spacing:.08em}
+.achgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:10px}
+.ach{display:flex;align-items:flex-start;gap:11px;padding:13px;border:1px solid var(--line);border-radius:11px;background:rgba(5,6,11,.35);opacity:.62;transition:.2s}
+.ach.got{opacity:1;border-color:color-mix(in srgb,var(--lime) 38%,transparent);background:rgba(157,255,91,.05)}
+.ach.pro{border-style:dashed}
+.ach.pro.got{border-color:color-mix(in srgb,var(--amber) 55%,transparent);background:rgba(255,207,74,.06)}
+.ach-icon{font-family:var(--pixel);font-size:1.35rem;line-height:1;color:var(--dim);width:26px;text-align:center;flex:0 0 26px}
+.ach.got .ach-icon{color:var(--lime);text-shadow:0 0 14px rgba(157,255,91,.5)}
+.ach.pro.got .ach-icon{color:var(--amber);text-shadow:0 0 14px rgba(255,207,74,.5)}
+.ach-body{flex:1;min-width:0;display:block}
+.ach-body b{font-size:.98rem;font-weight:400;letter-spacing:.03em;display:block}
+.ach-body b small{font-family:var(--pixel);font-size:.48rem;color:var(--amber);margin-left:6px;letter-spacing:.06em}
+.ach-body em{font-style:normal;font-size:.76rem;color:var(--dim);display:block;margin-top:3px;line-height:1.5}
+.ach-bar{display:block;height:3px;border-radius:2px;background:rgba(150,158,255,.12);margin-top:8px;overflow:hidden}
+.ach-bar i{display:block;height:100%;background:var(--lime);border-radius:2px}
+.ach.pro .ach-bar i{background:var(--amber)}
+.ach-state{font-family:var(--pixel);font-size:.5rem;color:var(--dim);white-space:nowrap;padding-top:3px}
+.ach.got .ach-state{color:var(--lime)}
+@media(max-width:560px){.btn{width:100%};.achgrid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -75,10 +94,17 @@ input:focus,textarea:focus{border-color:var(--cyan)}
     <h2>本地存档 <small>LOCAL SAVES</small></h2>
     <div class="list" id="saves"></div>
     <div class="row" style="margin-top:18px">
+      <button class="btn alt" id="downloadAll">从云端恢复</button>
       <button class="btn alt" id="uploadAll">上传全部到云端</button>
       <button class="btn alt" id="refresh">刷新</button>
     </div>
-    <p class="hint">每款游戏在游玩时每 30 秒自动保存一次。云端同步需要登录且后端已部署。</p>
+    <p class="hint">每款游戏每 30 秒自动存到本地；登录后可上传或恢复云端存档。冲突时以时间较新的为准。</p>
+  </section>
+
+  <section class="card">
+    <div class="achhead"><h2 style="margin:0">成就 <small>ACHIEVEMENTS</small></h2><span class="count" id="achCount"></span></div>
+    <div class="achgrid" id="achGrid"></div>
+    <p class="hint">成就记录在本机。PRO 成就需要会员身份才会点亮。</p>
   </section>
 
   <section class="card">
@@ -90,6 +116,7 @@ input:focus,textarea:focus{border-color:var(--cyan)}
 
 <script src="/assets/games.js?v=1"></script>
 <script src="/assets/core.js?v=1"></script>
+<script src="/assets/achievements.js?v=1"></script>
 <script>
 (function(){
   'use strict';
@@ -149,8 +176,10 @@ input:focus,textarea:focus{border-color:var(--cyan)}
     try {
       const data = mode === 'login' ? await C.api.login(email,password) : await C.api.register(email,password);
       C.auth.set(data.token, data.user);
+      if (data.user && data.user.is_pro) C.record('member');
       C.toast(mode === 'login' ? '登录成功' : '注册成功，云端同步已开启');
       renderAuth();
+      renderAch();
       try {
         const sub = await C.api.sub();
         const u = C.auth.user() || {};
@@ -158,6 +187,10 @@ input:focus,textarea:focus{border-color:var(--cyan)}
         C.auth.set(C.auth.token(), u);
         renderAuth();
       } catch(err){}
+      const next = new URLSearchParams(location.search).get('next');
+      if (next && /^\/play\/\?g=[\w\u4e00-\u9fa5-]+$/.test(next)) {
+        setTimeout(() => { location.href = next; }, 800);
+      }
     } catch (err) {
       C.toast('后端暂不可用或操作失败：' + err.message);
     } finally { $('authSubmit').disabled = false; }
@@ -174,6 +207,25 @@ input:focus,textarea:focus{border-color:var(--cyan)}
       try { await C.api.save(s.game, C.getJSON(s.key, {}).data || {}); ok++; } catch(e){}
     }
     C.toast('已上传 ' + ok + ' / ' + recs.length + ' 份存档');
+  });
+
+  $('downloadAll').addEventListener('click', async () => {
+    if (!C.auth.isLogged()) { C.toast('请先登录'); return; }
+    try {
+      const r = await C.api.exportCode();
+      const saves = (decodeCode(r.code) || {}).saves || {};
+      let ok = 0, kept = 0;
+      Object.keys(saves).forEach(game => {
+        const cloudRec = saves[game];
+        const localRec = C.getJSON('save_' + game, null);
+        const ct = new Date(cloudRec.saved_at || 0).getTime();
+        const lt = localRec ? new Date(localRec.saved_at || 0).getTime() : 0;
+        if (ct > lt) { C.setJSON('save_' + game, cloudRec); ok++; }
+        else kept++;
+      });
+      renderSaves();
+      C.toast('已恢复 ' + ok + ' 份 · 本地较新保留 ' + kept + ' 份');
+    } catch (e) { C.toast('恢复失败：' + e.message); }
   });
 
   $('makeCode').addEventListener('click', async () => {
@@ -205,11 +257,17 @@ input:focus,textarea:focus{border-color:var(--cyan)}
     } catch(e) { C.toast('存档码无法识别'); }
   });
 
+  function renderAch(){
+    if (!window.GS_ACH) return;
+    window.GS_ACH.check(true);
+    const s = window.GS_ACH.summary();
+    $('achCount').textContent = s.got + ' / ' + s.total + ' UNLOCKED · ' + s.pct + '%';
+    $('achGrid').innerHTML = window.GS_ACH.cardHTML();
+  }
+
   renderAuth();
   renderSaves();
-
-  const next = new URLSearchParams(location.search).get('next');
-  if (next && C.auth.isLogged()) setTimeout(() => { location.href = next; }, 900);
+  renderAch();
 })();
 </script>
 </body>

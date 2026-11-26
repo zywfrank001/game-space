@@ -130,6 +130,7 @@ iframe{display:block;width:100%;height:100%;border:0;background:#000}
 
 <script src="/assets/games.js?v=1"></script>
 <script src="/assets/core.js?v=1"></script>
+<script src="/assets/achievements.js?v=1"></script>
 <script>
 (function(){
   'use strict';
@@ -194,6 +195,7 @@ iframe{display:block;width:100%;height:100%;border:0;background:#000}
     C.setJSON(saveKey, record);
     saveTime.textContent = C.fmtDate(Date.now()).slice(-8);
     saveState.textContent = '已保存';
+    C.record('save_local', { game: gameId });
     if (!silent) C.toast('进度已存到本地');
     return record;
   }
@@ -206,10 +208,24 @@ iframe{display:block;width:100%;height:100%;border:0;background:#000}
     setTimeout(() => { frame.src = frame.src; }, 300);
   }
 
-  const initial = C.getJSON(saveKey, null);
-  if (initial) { restore(initial.data); saveTime.textContent = C.fmtDate(new Date(initial.saved_at).getTime()).slice(-8); }
-
-  frame.src = '/' + dir + '/index.html';
+  async function boot(){
+    let initial = C.getJSON(saveKey, null);
+    if (C.auth.isLogged()) {
+      try {
+        const cloud = await C.api.load(gameId);
+        const ct = cloud && cloud.saved_at ? new Date(cloud.saved_at).getTime() : 0;
+        const lt = initial && initial.saved_at ? new Date(initial.saved_at).getTime() : 0;
+        if (cloud && Object.keys(cloud.data || {}).length && ct > lt) {
+          initial = { game: gameId, data: cloud.data, saved_at: cloud.saved_at };
+          C.setJSON(saveKey, initial);
+          cloudState.textContent = '已从云端恢复 · ' + C.fmtDate(ct).slice(-8);
+        }
+      } catch(e){}
+    }
+    if (initial) { restore(initial.data); saveTime.textContent = C.fmtDate(new Date(initial.saved_at).getTime()).slice(-8); }
+    frame.src = '/' + dir + '/index.html';
+  }
+  boot();
   frame.addEventListener('load', () => {
     C.recent.add(dir, G.disp(game ? game[1] : dir));
     C.track('play', { game: gameId });
@@ -222,11 +238,12 @@ iframe{display:block;width:100%;height:100%;border:0;background:#000}
     const record = saveLocal(true);
     if (!C.auth.isLogged()) {
       C.toast('先登录，才能存到云端');
-      location.href = '/dashboard/?next=' + encodeURIComponent(location.pathname);
+      location.href = '/dashboard/?next=' + encodeURIComponent(location.pathname + location.search);
       return;
     }
     try {
       await C.api.save(gameId, record.data);
+      C.record('cloud_save', { game: gameId });
       cloudState.textContent = '已同步到云端 · ' + C.fmtDate(Date.now()).slice(-8);
       C.toast('已存到云端');
     } catch (e) {

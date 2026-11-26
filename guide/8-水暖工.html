@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>水暖工 攻略：管道连接顺序与漏水排查 · Game Space</title>
+<meta name="description" content="水暖工怎么玩？从管道布局、连接顺序到漏水排查，整理实用的解谜思路与常见问题。">
+<link rel="icon" href="/favicon.png" type="image/png"><link rel="manifest" href="/manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#05060b;--ink:#ecebfa;--dim:#9a97bb;--line:rgba(150,158,255,.14);--cyan:#22e3ff;--amber:#ffcf4a;--lime:#9dff5b;--cjk:'ZCOOL QingKe HuangYou','PingFang SC','Microsoft YaHei',sans-serif;--pixel:'Silkscreen',monospace}
+*{margin:0;padding:0;box-sizing:border-box}body{background:radial-gradient(120% 80% at 50% -10%,#171a33,var(--bg) 55%);color:var(--ink);font-family:var(--cjk);line-height:1.9}
+.wrap{max-width:760px;margin:0 auto;padding:clamp(22px,5vw,58px) clamp(16px,4vw,36px) 80px}
+a{color:var(--cyan)}.back{font-family:var(--pixel);font-size:.62rem;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 14px;border-radius:10px;display:inline-block}
+h1{font-size:clamp(2rem,6vw,3.2rem);font-weight:400;letter-spacing:.04em;margin:28px 0 10px}
+.kicker{font-family:var(--pixel);font-size:.6rem;letter-spacing:.18em;color:var(--amber)}
+h2{font-size:1.5rem;font-weight:400;margin:44px 0 14px;padding-left:14px;border-left:3px solid var(--lime)}
+p,li{color:var(--dim);font-size:1.05rem}ol{padding-left:24px;display:grid;gap:9px;margin:12px 0}
+.cta{display:inline-flex;margin-top:22px;padding:15px 26px;background:var(--lime);color:#05060b;border-radius:11px;text-decoration:none;font-weight:700}
+.tip{border:1px solid var(--line);border-radius:12px;padding:18px 20px;background:rgba(34,227,255,.04);margin:16px 0}
+.tip b{color:var(--cyan);font-weight:400}
+.q{border-bottom:1px solid var(--line);padding:18px 0}
+.q b{color:var(--ink);font-size:1.1rem;font-weight:400}
+footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);font-size:.85rem;color:var(--dim)}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"VideoGame","name":"水暖工","genre":"益智解谜","applicationCategory":"GameApplication","operatingSystem":"Web browser","description":"旋转并连接管道，让水流从起点顺利通到终点。"},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"管道解谜怎么入手？","acceptedAnswer":{"@type":"Answer","text":"先从起点和终点两端向中间推进，而不是从中间乱转。两端确定后，中间的可选方案会大幅减少。"}},
+{"@type":"Question","name":"总是漏水怎么办？","acceptedAnswer":{"@type":"Answer","text":"漏水说明某段管道接口方向不对。顺着水流方向逐段检查，优先修离漏水点最近的上游管道。"}},
+{"@type":"Question","name":"进度会保存吗？","acceptedAnswer":{"@type":"Answer","text":"会。游戏页面每 30 秒自动保存，登录后可以同步到云端。"}}
+]}]}
+</script>
+</head>
+<body><div class="wrap">
+<a class="back" href="/guide/">← 全部攻略</a>
+<div class="kicker" style="margin-top:28px">GUIDE #08 / 益智</div>
+<h1>水暖工</h1>
+<p class="kicker">先定两端，再通中间。</p>
+<a class="cta" data-game="8" href="#">▶ 打开游戏</a>
+
+<h2>解谜核心</h2>
+<p>目标是把管道连接成一条连续通路，让水从起点流到终点。看起来是转管道，实际是**约束推理**：起点和出口方向固定，中间每一段的可能性都被两端限制住了。</p>
+
+<h2>四个解题步骤</h2>
+<ol>
+<li><b>先锁定起点出口方向。</b>起点管子朝向哪边，第一段就必须接那个方向。这是唯一确定的信息，从它开始推。</li>
+<li><b>从终点倒推。</b>终点同样只有一种接法。两端同时推进，中间的空白会被快速压缩。</li>
+<li><b>优先处理转角和交叉。</b>直管几乎无所谓方向，转角和四通才是关键节点。先把它们摆对，再补直管。</li>
+<li><b>最后检查漏水点。</b>如果水在某个位置漏出，问题一定出在它的上游。顺着水流往回找，而不是乱转无关管道。</li>
+</ol>
+<div class="tip"><b>省时技巧：</b>不要一上来就转每一段。先在脑子里画出大致路线，再动手。盲目旋转只会让已经正确的管道被你转错。</div>
+
+<h2>常见疑问</h2>
+<div class="q"><b>管道解谜怎么入手？</b><p>从起点和终点两端向中间推进，先确定两端方向，再填中间。</p></div>
+<div class="q"><b>总是漏水怎么办？</b><p>沿水流方向往上游查，漏水点最近的几段管道最可能接错。</p></div>
+<div class="q"><b>进度会保存吗？</b><p>会。页面每 30 秒自动保存，登录后可以同步到云端。</p></div>
+
+<footer>游戏素材来源于开源社区，仅供学习娱乐 · <a href="/">街机厅</a> · <a href="/daily/">每日挑战</a></footer>
+</div>
+<script src="/assets/games.js?v=1"></script>
+<script>document.querySelectorAll('[data-game]').forEach(a=>{const g=window.GS.find(a.dataset.game);if(g)a.href=window.GS.playUrl(g);});</script>
+</body></html>

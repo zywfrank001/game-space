@@ -3,34 +3,76 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>游戏攻略 · Game Space</title>
-<meta name="description" content="Game Space 游戏攻略与技巧：吃水果的蛇、坦克大战、黄金矿工。">
+<meta name="description" content="Game Space 游戏攻略与技巧：射击、消除、赛车、跑酷、记忆、益智、儿童教育，13 款精品玩法指南。">
 <link rel="icon" href="/favicon.png" type="image/png"><link rel="manifest" href="/manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Silkscreen&family=ZCOOL+QingKe+HuangYou&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#05060b;--panel:#101220;--ink:#ecebfa;--dim:#8b88ae;--line:rgba(150,158,255,.14);--cyan:#22e3ff;--amber:#ffcf4a;--lime:#9dff5b;--cjk:'ZCOOL QingKe HuangYou','PingFang SC','Microsoft YaHei',sans-serif;--pixel:'Silkscreen',monospace}
 *{margin:0;padding:0;box-sizing:border-box}body{background:radial-gradient(120% 80% at 50% -10%,#171a33,var(--bg) 55%);color:var(--ink);font-family:var(--cjk);min-height:100vh}
-.wrap{max-width:860px;margin:0 auto;padding:clamp(24px,5vw,60px) clamp(16px,4vw,40px) 70px}
+.wrap{max-width:900px;margin:0 auto;padding:clamp(24px,5vw,60px) clamp(16px,4vw,40px) 70px}
 a{color:inherit}.back{font-family:var(--pixel);font-size:.62rem;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 14px;border-radius:10px;display:inline-block}
 h1{font-size:clamp(2rem,6vw,3.2rem);font-weight:400;letter-spacing:.04em;margin:28px 0 12px}
 p{color:var(--dim);line-height:1.9}
-.grid{display:grid;gap:14px;margin-top:40px}
-.item{display:flex;align-items:center;gap:18px;padding:22px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(160deg,var(--panel),var(--bg));text-decoration:none;transition:.2s}
-.item:hover{border-color:var(--cyan);transform:translateY(-3px)}
-.item .no{font-family:var(--pixel);font-size:1.3rem;color:var(--amber)}
-.item .tx{flex:1}.item b{font-size:1.25rem;font-weight:400}.item small{display:block;color:var(--dim);margin-top:6px;line-height:1.6}
-.item .go{color:var(--lime);font-size:1.4rem}
+.sec{margin-top:38px}
+.sec h2{font-size:1.1rem;font-weight:400;letter-spacing:.06em;color:var(--amber);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.sec h2::after{content:'';flex:1;height:1px;background:var(--line)}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.item{display:flex;align-items:center;gap:14px;padding:18px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(160deg,var(--panel),var(--bg));text-decoration:none;transition:.2s}
+.item:hover{border-color:var(--cyan);transform:translateY(-3px);box-shadow:0 12px 30px -16px var(--cyan)}
+.item .no{font-family:var(--pixel);font-size:1.05rem;color:var(--amber)}
+.item .tx{flex:1}.item b{font-size:1.1rem;font-weight:400}.item small{display:block;color:var(--dim);margin-top:5px;line-height:1.55;font-size:.84rem}
+.item .go{color:var(--lime);font-size:1.2rem}
 footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--line);font-size:.85rem;color:var(--dim);line-height:1.8}
 </style>
 </head>
 <body><div class="wrap">
 <a class="back" href="/">← 返回街机厅</a>
 <h1>游戏<strong style="color:var(--cyan);font-weight:400">攻略</strong></h1>
-<p>规则、技巧与常见疑问。看完直接开玩，进度会被自动保存。</p>
+<p>规则、技巧与常见疑问。13 款精品指南，看完直接开玩，进度会被自动保存。</p>
+
+<section class="sec">
+<h2>动作与射击</h2>
 <div class="grid">
-<a class="item" href="/guide/17-吃水果的蛇.html"><span class="no">#17</span><span class="tx"><b>吃水果的蛇</b><small>别急着追果子，先把退路留出来。</small></span><span class="go">→</span></a>
+<a class="item" href="/guide/1-僵尸鸭猎手.html"><span class="no">#01</span><span class="tx"><b>僵尸鸭猎手</b><small>别追着鸭子跑，让它们自己撞上准星。</small></span><span class="go">→</span></a>
 <a class="item" href="/guide/3-坦克大战.html"><span class="no">#03</span><span class="tx"><b>坦克大战</b><small>砖墙不是障碍，是你最便宜的武器。</small></span><span class="go">→</span></a>
-<a class="item" href="/guide/9-黄金矿工.html"><span class="no">#09</span><span class="tx"><b>黄金矿工</b><small>抓钩的抛物线，比手速更重要。</small></span><span class="go">→</span></a>
+<a class="item" href="/guide/15-忍者冒险小游戏.html"><span class="no">#15</span><span class="tx"><b>忍者冒险</b><small>提前起跳，比精准起跳更重要。</small></span><span class="go">→</span></a>
 </div>
-<p style="margin-top:34px;font-size:.92rem">更多游戏的攻略正在整理中。想要哪一款？欢迎在 GitHub 提 Issue。</p>
+</section>
+
+<section class="sec">
+<h2>休闲与消除</h2>
+<div class="grid">
+<a class="item" href="/guide/9-黄金矿工.html"><span class="no">#09</span><span class="tx"><b>黄金矿工</b><small>抓钩的抛物线，比手速更重要。</small></span><span class="go">→</span></a>
+<a class="item" href="/guide/17-吃水果的蛇.html"><span class="no">#17</span><span class="tx"><b>吃水果的蛇</b><small>别急着追果子，先把退路留出来。</small></span><span class="go">→</span></a>
+<a class="item" href="/guide/19-捕鱼狂.html"><span class="no">#19</span><span class="tx"><b>捕鱼狂</b><small>网的价值，在于一次罩住多少。</small></span><span class="go">→</span></a>
+<a class="item" href="/guide/27-果冻3.html"><span class="no">#27</span><span class="tx"><b>果冻3</b><small>别急着消，先找那一步能引发连锁。</small></span><span class="go">→</span></a>
+</div>
+</section>
+
+<section class="sec">
+<h2>跑酷与竞速</h2>
+<div class="grid">
+<a class="item" href="/guide/10-逃亡.html"><span class="no">#10</span><span class="tx"><b>逃亡</b><small>看远处，别盯着脚下。</small></span><span class="go">→</span></a>
+<a class="item" href="/guide/20-疯狂跑步者.html"><span class="no">#20</span><span class="tx"><b>疯狂跑步者</b><small>提前一跳，胜过临门一脚。</small></span><span class="go">→</span></a>
+<a class="item" href="/guide/24-交通赛车.html"><span class="no">#24</span><span class="tx"><b>交通赛车</b><small>看远处的车，别只看眼前。</small></span><span class="go">→</span></a>
+</div>
+</section>
+
+<section class="sec">
+<h2>益智与记忆</h2>
+<div class="grid">
+<a class="item" href="/guide/5-万圣节记忆.html"><span class="no">#05</span><span class="tx"><b>万圣节记忆</b><small>记忆力不是天赋，是方法。</small></span><span class="go">→</span></a>
+<a class="item" href="/guide/8-水暖工.html"><span class="no">#08</span><span class="tx"><b>水暖工</b><small>先定两端，再通中间。</small></span><span class="go">→</span></a>
+</div>
+</section>
+
+<section class="sec">
+<h2>儿童教育</h2>
+<div class="grid">
+<a class="item" href="/guide/47-儿童数学游戏.html"><span class="no">#47</span><span class="tx"><b>儿童数学游戏</b><small>重点是"愿意算"，不是"算得快"。</small></span><span class="go">→</span></a>
+</div>
+</section>
+
+<p style="margin-top:34px;font-size:.92rem">这 13 款是精挑细选的玩法指南。想要哪一款？欢迎在 GitHub 提 Issue。</p>
 <footer>游戏素材来源于开源社区，仅供学习娱乐 · <a href="/daily/">每日挑战</a> · <a href="/pricing/">会员方案</a></footer>
 </div></body></html>

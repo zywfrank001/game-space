@@ -449,7 +449,7 @@
             <nav class="topnav" aria-label="主导航">
                 <a href="/daily/"><b>[</b> 每日挑战 <b>]</b></a>
                 <a href="/guide/"><b>[</b> 游戏攻略 <b>]</b></a>
-                <a href="/dashboard/"><b>[</b> 我的存档 <b>]</b></a>
+                <a href="/dashboard/"><b>[</b> 我的存档 <b id="achBadge">]</b></a>
                 <a class="pro" href="/pricing/"><b>[</b> 会员方案 <b>]</b></a>
             </nav>
         </header>
@@ -494,6 +494,7 @@
 
     <script src="/assets/games.js?v=1"></script>
     <script src="/assets/core.js?v=1"></script>
+    <script src="/assets/achievements.js?v=1"></script>
     <script>
         // name 为磁盘上目录去掉「序号-」后的原样后缀(56/59 含「- MatCH3」),用于拼真实路径
         const GAMES = window.GS.GAMES;
@@ -645,6 +646,11 @@
             foldBtn.textContent = folded ? '展开 ▾' : '收起 ▴';
             foldBtn.setAttribute('aria-expanded', String(!folded));
         });
+
+        if (window.GS_ACH) {
+            const s = window.GS_ACH.summary();
+            if (s.got) document.getElementById('achBadge').textContent = '◆' + s.got + ']';
+        }
 
         if ('serviceWorker' in navigator) {
             addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));

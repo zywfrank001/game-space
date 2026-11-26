@@ -102,5 +102,5 @@
     return isNaN(d.getTime()) ? '' : d.toLocaleString('zh-CN', { hour12:false });
   };
 
-  window.GS_CORE = { K, getJSON, setJSON, recent, auth, api, request, track, toast, fmtDate };
+  window.GS_CORE = { K, getJSON, setJSON, recent, auth, api, request, track, record: function(){}, toast, fmtDate };
 })();
